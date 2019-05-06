@@ -8,18 +8,33 @@ namespace ACMG_Generator
         {
             DiceRoller diceRoll;
             string characterName;
+            string response;
+            bool repeat = true;
 
-            Console.WriteLine("What is the name of your character?");
-            characterName = Console.ReadLine();
-            diceRoll = new DiceRoller(characterName);
-            diceRoll.Display();
-            //things to do:
-            //- make database (contains diceRoll, diceNum, array of character traits)
-            //- Char traits (age, gender, specialisation, weapon, outfit, ability, 5 perks)
-            //- Gender is female unless a perk makes them male.
-            //- Age is 6 + diceroll; if above 10 subtract 10 from diceroll
-            //- diceroll is 11d20
-            //- display results to user at the end
+            while(repeat == true)
+            {
+                response = ResponseValidator.CheckIfValidString("Do you want to name your character (Y/N)?", "Y", "N");
+
+                if (response == "Y")
+                {
+                    Console.WriteLine("What is the name of your character?");
+                    characterName = Console.ReadLine();
+                    diceRoll = new DiceRoller(characterName);
+                }
+                else
+                {
+                    diceRoll = new DiceRoller();
+                }
+                diceRoll.Display();
+                Console.WriteLine();
+
+                response = ResponseValidator.CheckIfValidString("Do you want to make another character (Y/N)?", "Y", "N");
+
+                if (response.ToUpper() == "N")
+                {
+                    repeat = false;
+                }
+            }
         }
     }
 }

@@ -12,6 +12,12 @@ namespace ACMG_Generator
         private MahouDataStore magicalGirl;
         private List<int> diceResults;
 
+        public DiceRoller()
+        {
+            diceResults = DiceRoll(diceNumSides, diceTotalRolls);
+            magicalGirl = new MahouDataStore("", diceResults);
+        }
+
         public DiceRoller(string characterName)
         {
             diceResults = DiceRoll(diceNumSides, diceTotalRolls);
@@ -34,14 +40,15 @@ namespace ACMG_Generator
 
         public void Display()
         {
+            Console.WriteLine();
             Console.Write("Your dice were: ");
 
             for(int diceNum = 0; diceNum < diceResults.Count; diceNum++)
             {
-                Console.Write(diceResults[diceNum]);
+                Console.Write(diceResults[diceNum] + " ");
             }
 
-            Console.WriteLine();
+            Console.WriteLine("\n");
             magicalGirl.Display();
         }
     }

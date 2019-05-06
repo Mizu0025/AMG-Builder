@@ -6,6 +6,7 @@ namespace ACMG_Generator
 {
     enum BodyType
     {
+        Unknown,
         Underdeveloped,
         Average,
         Overdeveloped
@@ -13,12 +14,14 @@ namespace ACMG_Generator
 
     enum Gender
     {
+        Unknown,
         Male,
         Female
     }
 
     enum Specialisation
     {
+        Unknown,
         Fire,
         Ice,
         Air,
@@ -43,6 +46,7 @@ namespace ACMG_Generator
 
     enum Weapon
     {
+        Unknown,
         Melee,
         Ranged,
         Mystic,
@@ -51,6 +55,7 @@ namespace ACMG_Generator
 
     enum Outfit
     {
+        Unknown,
         Skimpy,
         Flowing,
         Elaborate,
@@ -59,6 +64,7 @@ namespace ACMG_Generator
 
     enum Ability
     {
+        Unknown,
         Killing_Blow,
         Hammerspace,
         Twinned_Soul,
@@ -73,6 +79,7 @@ namespace ACMG_Generator
 
     enum CombatPerks
     {
+        Unknown,
         Dual_Weapon,
         Martial_Training,
         Enhanced_Weapon,
@@ -97,6 +104,7 @@ namespace ACMG_Generator
 
     enum GeneralPerks
     {
+        Unknown,
         Interdimensional_Tourist,
         Closure,
         Fated,
@@ -231,7 +239,22 @@ namespace ACMG_Generator
 
         public void SetOutfit(int diceNum)
         {
-            outfit = (Outfit)diceNum;
+            if (diceNum < 6)
+            {
+                outfit = Outfit.Skimpy;
+            }
+            else if (diceNum < 11)
+            {
+                outfit = Outfit.Flowing;
+            }
+            else if (diceNum < 16)
+            {
+                outfit = Outfit.Elaborate;
+            }
+            else
+            {
+                outfit = Outfit.Uniform;
+            }
         }
 
         public void SetOutfit(Outfit characterOutfit)
@@ -363,6 +386,7 @@ namespace ACMG_Generator
             Console.WriteLine("Character Name: {0}", name);
             Console.WriteLine("Age: {0}", age);
             Console.WriteLine("Gender: {0}", gender.ToString());
+            Console.WriteLine("Body Type: {0}", bodyType.ToString());
             Console.WriteLine("Specialisation: {0}", specialisation.ToString());
             Console.WriteLine("Weapon: {0}", weapon.ToString());
             Console.WriteLine("Outfit: {0}", outfit.ToString());
