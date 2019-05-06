@@ -33,6 +33,7 @@ namespace ACMG_Generator
                 Console.Write(diceResults[diceNum]);
             }
 
+            Console.WriteLine();
             magicalGirl.Display();
         }
     }
