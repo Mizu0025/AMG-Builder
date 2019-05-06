@@ -20,15 +20,32 @@ namespace ACMG_Generator
     enum Specialisation
     {
         Fire,
+        Ice,
+        Air,
+        Spirit,
+        Reinforcement,
+        Psychic,
+        Time,
+        Lightning,
+        Sound,
+        Darkness,
+        Illusion,
+        Light,
+        Wood,
+        Empathic,
         Water,
-        Electricity
+        Gravity,
+        Stone,
+        Beast,
+        Metal,
+        Oddball
     }
 
     enum Weapon
     {
         Melee,
         Ranged,
-        Magic,
+        Mystic,
         Fist
     }
 
@@ -37,29 +54,69 @@ namespace ACMG_Generator
         Skimpy,
         Flowing,
         Elaborate,
-        Cosplay
+        Uniform
     }
 
     enum Ability
     {
-        ability1,
-        ability2,
-        ability3
+        Killing_Blow,
+        Hammerspace,
+        Twinned_Soul,
+        Focused_Assault,
+        Barrage,
+        Power_of_Friendship,
+        Duplication,
+        Third_Eye,
+        Regeneration,
+        Tentacles
     }
 
     enum CombatPerks
     {
-        combatperk1,
-        combatperk2,
-        combatperk3
+        Dual_Weapon,
+        Martial_Training,
+        Enhanced_Weapon,
+        Mystic_Artifact,
+        Gifted,
+        Flexibility,
+        Enhanced_Transformation,
+        Disguise_Artifact,
+        Blood_Magic,
+        Hammerspace_Handbag,
+        Enhanced_Sustenance,
+        Enhanced_Outfit,
+        Healing_Artifact,
+        Ally,
+        Monstrous_Metamorphosis,
+        Sorcery,
+        Wings,
+        Purification_Artifact,
+        Awareness,
+        Power_Artifact
     }
 
     enum GeneralPerks
     {
-        generalperk1,
-        generalperk2,
-        generalperk3,
-        Masculinity
+        Interdimensional_Tourist,
+        Closure,
+        Fated,
+        Training,
+        Interdimensional_Home,
+        Incognito,
+        Environmental_Sealing,
+        Get_Out_Of_Jail,
+        Big_Damn_Hero,
+        Absolute_Direction,
+        Big_Backpack,
+        Natural_Aging,
+        Masculinity,
+        Overcity_Shift,
+        Money,
+        Familiar,
+        Soul_Jar,
+        Eternal_Style,
+        A_Way_Out,
+        Fake_Parents
     }
 
     class MahouDataStore
@@ -73,6 +130,7 @@ namespace ACMG_Generator
         private Outfit outfit;
         private Ability ability;
         private List<Enum> perks = new List<Enum>();
+        //add stats here (STR/AGI/VIT/MAG/LCK), and some way to calc them below
 
         public MahouDataStore(string characterName, List<int> diceResults)
         {
@@ -158,7 +216,7 @@ namespace ACMG_Generator
             }
             else if(diceNum < 16)
             {
-                weapon = Weapon.Magic;
+                weapon = Weapon.Mystic;
             }
             else
             {
@@ -183,7 +241,14 @@ namespace ACMG_Generator
 
         public void SetAbility(int diceNum)
         {
-            ability = (Ability)diceNum;
+            if(diceNum > 10)
+            {
+                ability = (Ability)diceNum - 10;
+            }
+            else
+            {
+                ability = (Ability)diceNum;
+            }
         }
 
         public void SetAbility(Ability characterAbility)
