@@ -138,13 +138,8 @@ namespace ACMG_Generator
         private Outfit outfit;
         private Ability ability;
         private List<Enum> perks = new List<Enum>();
-
-        private int strength = 4;
-        private int agility = 4;
-        private int vitality = 4;
-        private int magic = 4;
-        private int luck = 4;
-        //add stats here (STR/AGI/VIT/MAG/LCK), and some way to calc them below
+        private StatCalculation stats = new StatCalculation();
+        private string questionResponse;
 
         public MahouDataStore(string characterName, List<int> diceResults)
         {
@@ -201,21 +196,25 @@ namespace ACMG_Generator
             {
                 bodyType = BodyType.Overdeveloped;
             }
+            stats.CalculateBodyTypeStats(bodyType);
         }
 
         public void SetBodyType(BodyType characterBodyType)
         {
             bodyType = characterBodyType;
+            stats.CalculateBodyTypeStats(bodyType);
         }
 
         public void SetSpecialisation(int diceNum)
         {
             specialisation = (Specialisation)diceNum;
+            stats.CalculateSpecialisationStats((int)specialisation);
         }
 
         public void SetSpecialisation(Specialisation characterSpecialisation)
         {
             specialisation = characterSpecialisation;
+            stats.CalculateSpecialisationStats((int)specialisation);
         }
 
         public void SetWeapon(int diceNum)
@@ -236,11 +235,13 @@ namespace ACMG_Generator
             {
                 weapon = Weapon.Fist;
             }
+            stats.CalculateWeaponStats(weapon);
         }
 
         public void SetWeapon(Weapon characterWeapon)
         {
             weapon = characterWeapon;
+            stats.CalculateWeaponStats(weapon);
         }
 
         public void SetOutfit(int diceNum)
@@ -261,11 +262,13 @@ namespace ACMG_Generator
             {
                 outfit = Outfit.Uniform;
             }
+            stats.CalculateOutfitStats(outfit);
         }
 
         public void SetOutfit(Outfit characterOutfit)
         {
             outfit = characterOutfit;
+            stats.CalculateOutfitStats(outfit);
         }
 
         public void SetAbility(int diceNum)
@@ -278,11 +281,13 @@ namespace ACMG_Generator
             {
                 ability = (Ability)diceNum;
             }
+            stats.CalculateAbilityStats((int)ability);
         }
 
         public void SetAbility(Ability characterAbility)
         {
             ability = characterAbility;
+            stats.CalculateAbilityStats((int)ability);
         }
 
         public void SetCombatPerk(int diceNum)
@@ -295,11 +300,13 @@ namespace ACMG_Generator
             {
                 perks.Add((CombatPerks)diceNum);
             }
+            stats.CalculateCombatPerkStats(diceNum);
         }
 
         public void SetCombatPerk(CombatPerks characterCombatPerk)
         {
             perks.Add(characterCombatPerk);
+            stats.CalculateCombatPerkStats((int)characterCombatPerk);
         }
 
         public void SetGeneralPerk(int diceNum)
@@ -312,17 +319,17 @@ namespace ACMG_Generator
             {
                 perks.Add((GeneralPerks)diceNum);
             }
+            stats.CalculateGeneralPerkStats(diceNum);
         }
 
         public void SetGeneralPerk(GeneralPerks characterGeneralPerk)
         {
             perks.Add(characterGeneralPerk);
+            stats.CalculateGeneralPerkStats((int)characterGeneralPerk);
         }
 
         public void SetBuild(List<int> diceResults)
         {
-            string response;
-
             for(int diceNum = 0; diceNum < diceResults.Count; diceNum++)
             {
                 switch (diceNum)
@@ -368,9 +375,9 @@ namespace ACMG_Generator
                         break;
 
                     case 10:
-                        response = ResponseValidator.CheckIfValidString("Please enter desired final perk type (General/Combat)", "General", "Combat");
+                        questionResponse = ResponseValidator.CheckIfValidString("Please enter desired final perk type (General/Combat)", "General", "Combat");
 
-                        if (response == "combat")
+                        if (questionResponse == "combat")
                         {
                             SetCombatPerk(diceResults[diceNum]);
                             break;
@@ -389,6 +396,7 @@ namespace ACMG_Generator
 
         public void Display()
         {
+            //shift specialisation, ability and perk assignment to their own classes
             Console.WriteLine("BUILD DETAILS");
             Console.WriteLine("Character Name: {0}", name);
             Console.WriteLine("Age: {0}", age);
@@ -404,13 +412,7 @@ namespace ACMG_Generator
                 Console.WriteLine("Perk {0}: {1}", perkCount+1, perks[perkCount]);
             }
 
-            Console.WriteLine();
-            Console.WriteLine("STATS");
-            Console.WriteLine("Strength: {0}", strength);
-            Console.WriteLine("Agility: {0}", agility);
-            Console.WriteLine("Vitality: {0}", vitality);
-            Console.WriteLine("Magic: {0}", magic);
-            Console.WriteLine("Luck: {0}", luck);
+            stats.Display();
         }
     }
 }
