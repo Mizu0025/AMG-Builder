@@ -41,7 +41,7 @@ namespace ACMG_Generator
         public void Display()
         {
             Console.WriteLine();
-            Console.Write("Your dice were: ");
+            Console.Write("DICE \n");
 
             for(int diceNum = 0; diceNum < diceResults.Count; diceNum++)
             {

@@ -138,6 +138,12 @@ namespace ACMG_Generator
         private Outfit outfit;
         private Ability ability;
         private List<Enum> perks = new List<Enum>();
+
+        private int strength = 4;
+        private int agility = 4;
+        private int vitality = 4;
+        private int magic = 4;
+        private int luck = 4;
         //add stats here (STR/AGI/VIT/MAG/LCK), and some way to calc them below
 
         public MahouDataStore(string characterName, List<int> diceResults)
@@ -383,6 +389,7 @@ namespace ACMG_Generator
 
         public void Display()
         {
+            Console.WriteLine("BUILD DETAILS");
             Console.WriteLine("Character Name: {0}", name);
             Console.WriteLine("Age: {0}", age);
             Console.WriteLine("Gender: {0}", gender.ToString());
@@ -396,6 +403,14 @@ namespace ACMG_Generator
             {
                 Console.WriteLine("Perk {0}: {1}", perkCount+1, perks[perkCount]);
             }
+
+            Console.WriteLine();
+            Console.WriteLine("STATS");
+            Console.WriteLine("Strength: {0}", strength);
+            Console.WriteLine("Agility: {0}", agility);
+            Console.WriteLine("Vitality: {0}", vitality);
+            Console.WriteLine("Magic: {0}", magic);
+            Console.WriteLine("Luck: {0}", luck);
         }
     }
 }
