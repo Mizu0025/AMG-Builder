@@ -9,7 +9,6 @@ namespace ACMG_Generator
         Unknown,
         Specialisation,
         CombatPerks,
-        GeneralPerks
     }
 
     enum StatType
@@ -129,11 +128,11 @@ namespace ACMG_Generator
 
                 if (questionResponse == "str")
                 {
-                    strength = strength + 3;
+                    strength = strength + 1;
                 }
                 else
                 {
-                    magic = magic + 3;
+                    magic = magic + 1;
                 }
             }
         }
@@ -151,34 +150,38 @@ namespace ACMG_Generator
             }
         }
 
-        private void CharacterBuildCategoryFinder(CharacterBuildCategory characterBuildCategory)
+        private void increaseTwoStats(string question, string validAnswer1, string validAnswer2, string statType1, string statType2, int amountIncreased)
         {
-            if (characterBuildCategory == CharacterBuildCategory.Specialisation)
+            questionResponse = ResponseValidator.CheckIfValidString(question, validAnswer1, validAnswer2);
+
+            if (questionResponse == validAnswer1)
             {
-                //code
-            }
-            else if (characterBuildCategory == CharacterBuildCategory.CombatPerks)
-            {
-                //code
+                statType1 = statType1 + amountIncreased;
             }
             else
             {
-                //code
+                statType2 = statType2 + amountIncreased;
             }
         }
 
         private void CalculateStats(int diceRollNum, CharacterBuildCategory characterBuildCategory)
         {
             //make method for if-else checks for characterBuildCategory (takes in string question, validResponse1, validResponse2, characterBuildCategory, statType1, statType2)
-            //specialty is 1-4 stats increased
-            //power is 1 stat, but only for the first roll
-            //perks are 1 stat
 
             switch (diceRollNum)
             {
                 case 1:
-                    CharacterBuildCategoryFinder(characterBuildCategory);
-                    break;
+                    if(characterBuildCategory == CharacterBuildCategory.Specialisation)
+                    {
+                        increaseTwoStats("Please enter desired ability stat bonus (STR/MAG)", "STR", "MAG", "magic", "strength", 3);
+                        //get enum StatType working so you can assign statType variable to the related stat
+                        break;
+                    }
+                    else //Combat Perk stat assignment
+                    {
+
+                        break;
+                    }
 
                 case 2:
                     break;
