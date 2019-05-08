@@ -30,12 +30,10 @@ namespace ACMG_Generator
         private int luck = 4;
         private int specialisationNum;
         private string questionResponse;
-        private Dictionary<string, int> specialisationDict;
         int[] specialtyOneStat = new int[1] { 3 };
         int[] specialtyTwoStat = new int[5] { 1, 6, 17, 19, 20 };
         int[] specialtyThreeStat = new int[11] { 2, 4, 7, 8, 9, 10, 11, 12, 13, 14, 15 };
         int[] specialtyFourStat = new int[2] { 5, 18 };
-        Weapon weaponType;
 
         public void CalculateBodyTypeStats(BodyType bodyType)
         {
@@ -99,7 +97,6 @@ namespace ACMG_Generator
             {
                 strength = strength + 2;
             }
-            weaponType = weapon;
         }
 
         public void CalculateOutfitStats(Outfit outfit)
@@ -122,9 +119,9 @@ namespace ACMG_Generator
             }
         }
 
-        public void CalculateSpecialisationStats(int diceRollNum)
+        public void CalculateSpecialisationStats(int diceRollNum, Weapon weaponType)
         {
-            CalculateSpecialisationAndCombatPerkStats(diceRollNum, CharacterBuildCategory.Specialisation);
+            CalculateSpecialisationAndCombatPerkStats(diceRollNum, CharacterBuildCategory.Specialisation, weaponType);
         }
 
         public void CalculateAbilityStats(int ability)
@@ -144,9 +141,9 @@ namespace ACMG_Generator
             }
         }
 
-        public void CalculateCombatPerkStats(int diceRollNum)
+        public void CalculateCombatPerkStats(int diceRollNum, Weapon weaponType)
         {
-            CalculateSpecialisationAndCombatPerkStats(diceRollNum, CharacterBuildCategory.CombatPerks);
+            CalculateSpecialisationAndCombatPerkStats(diceRollNum, CharacterBuildCategory.CombatPerks, weaponType);
         }
 
         public void CalculateGeneralPerkStats(int diceRollNum)
@@ -161,23 +158,23 @@ namespace ACMG_Generator
         {
             if (weapon == Weapon.Melee)
             {
-                DualWeaponStatCalc("Please choose the secondary type of your weapon (Ranged/Mystic/Fist)", "Ranged", "Mystic", "Fist", vitality, agility, magic, 1);
+                DualWeaponStatCalc("Please choose the secondary type of your weapon (Ranged/Mystic/Fist)", "Ranged", "Mystic", "Fist", ref vitality, ref agility, ref magic, 1);
             }
             else if (weapon == Weapon.Ranged)
             {
-                DualWeaponStatCalc("Please choose the secondary type of your weapon (Melee/Mystic/Fist)", "Melee", "Mystic", "Fist", vitality, agility, strength, 1);
+                DualWeaponStatCalc("Please choose the secondary type of your weapon (Melee/Mystic/Fist)", "Melee", "Mystic", "Fist", ref vitality, ref agility, ref strength, 1);
             }
             else if (weapon == Weapon.Mystic)
             {
-                DualWeaponStatCalc("Please choose the secondary type of your weapon (Melee/Ranged/Fist)", "Melee", "Ranged", "Fist", vitality, agility, magic, 1);
+                DualWeaponStatCalc("Please choose the secondary type of your weapon (Melee/Ranged/Fist)", "Melee", "Ranged", "Fist", ref vitality, ref agility, ref magic, 1);
             }
             else
             {
-                DualWeaponStatCalc("Please choose the secondary type of your weapon (Melee/Ranged/Mystic)", "Melee", "Ranged", "Mystic", vitality, agility, magic, 1);
+                DualWeaponStatCalc("Please choose the secondary type of your weapon (Melee/Ranged/Mystic)", "Melee", "Ranged", "Mystic", ref vitality, ref agility, ref magic, 1);
             }
         }
 
-        private void DualWeaponStatCalc(string question, string validAnswer1, string validAnswer2, string validAnswer3, int statType1, int statType2, int statType3, int amountIncreased)
+        private void DualWeaponStatCalc(string question, string validAnswer1, string validAnswer2, string validAnswer3, ref int statType1, ref int statType2, ref int statType3, int amountIncreased)
         {
             questionResponse = ResponseValidator.CheckIfValidString(question, validAnswer1, validAnswer2, validAnswer3);
 
@@ -249,19 +246,23 @@ namespace ACMG_Generator
             //have variable for 4 diff stats, which are assigned values in IncreaseXStat/s methods, so as to be able to use them here
             //specialisation1 = specialisationDict.GetType
 
-            //for(int specCount = 0; specCount < 20; specCount++)
+            //for (int specCount = 0; specCount < 20; specCount++)
             //{
-            //    if(specialisationNum == specialtyOneStat[specCount])
+            //    if (specialisationNum == specialtyOneStat[specCount])
             //    {
-            //        IncreaseOneStat(agility, 1);
+            //        IncreaseOneStat(ref agility, 1);
             //    }
             //    else if (specialisationNum == specialtyTwoStat[specCount])
             //    {
-            //        questionResponse = ResponseValidator.CheckIfValidString("Which of the two stats increased by your specialisation do you want to increase ({stat1}, {stat2})?", specialisationStat1, specialisationStat2);
+            //        questionResponse = ResponseValidator.CheckIfValidString("Which of the two stats increased by your specialisation do you want to increase ({0}, {1})?", specialisationStat1, specialisationStat2);
 
-            //        if(questionResponse == specialisationStat1)
+            //        if (questionResponse == specialisationStat1)
             //        {
-                        
+            //            specialisa
+            //        }
+            //        else
+            //        {
+
             //        }
 
             //    }
@@ -276,9 +277,9 @@ namespace ACMG_Generator
             //}
         }
 
-        private void IncreaseOneStat(ref int statType1, int amountIncreased)
+        private void IncreaseOneStat(ref int statType, int amountIncreased)
         {
-            statType1 = statType1 + amountIncreased;
+            statType = statType + amountIncreased;
         }
 
         private void IncreaseTwoStats(string question, string validAnswer1, string validAnswer2, ref int statType1, ref int statType2, int amountIncreased)
@@ -326,7 +327,7 @@ namespace ACMG_Generator
             IncreaseOneStat(ref statType1, amountIncreased);
         }
 
-        private void CalculateSpecialisationAndCombatPerkStats(int diceRollNum, CharacterBuildCategory characterBuildCategory)
+        private void CalculateSpecialisationAndCombatPerkStats(int diceRollNum, CharacterBuildCategory characterBuildCategory, Weapon weaponType)
         {
             if(characterBuildCategory == CharacterBuildCategory.Specialisation)
             {

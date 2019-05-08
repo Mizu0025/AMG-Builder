@@ -208,13 +208,13 @@ namespace ACMG_Generator
         public void SetSpecialisation(int diceNum)
         {
             specialisation = (Specialisation)diceNum;
-            stats.CalculateSpecialisationStats((int)specialisation);
+            stats.CalculateSpecialisationStats((int)specialisation, weapon);
         }
 
         public void SetSpecialisation(Specialisation characterSpecialisation)
         {
             specialisation = characterSpecialisation;
-            stats.CalculateSpecialisationStats((int)specialisation);
+            stats.CalculateSpecialisationStats((int)specialisation, weapon);
         }
 
         public void SetWeapon(int diceNum)
@@ -300,13 +300,13 @@ namespace ACMG_Generator
             {
                 perks.Add((CombatPerks)diceNum);
             }
-            stats.CalculateCombatPerkStats(diceNum);
+            stats.CalculateCombatPerkStats(diceNum, weapon);
         }
 
         public void SetCombatPerk(CombatPerks characterCombatPerk)
         {
             perks.Add(characterCombatPerk);
-            stats.CalculateCombatPerkStats((int)characterCombatPerk);
+            stats.CalculateCombatPerkStats((int)characterCombatPerk, weapon);
         }
 
         public void SetGeneralPerk(int diceNum)
