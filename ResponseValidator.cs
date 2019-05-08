@@ -29,6 +29,18 @@ namespace ACMG_Generator
             return response;
         }
 
+        public static string CheckIfValidString(string question, string validResponse1, string validResponse2, string validResponse3, string validResponse4, string validResponse5)
+        {
+            string response = AskQuestionAndGetResponse(question);
+            List<string> validValues = new List<string> { validResponse1.ToLower(), validResponse2.ToLower(), validResponse3.ToLower(), validResponse4.ToLower(), validResponse5.ToLower() };
+
+            while (validValues.IndexOf(response.ToLower()) == -1)
+            {
+                response = CheckIfAnswerEntered(question);
+            }
+            return response;
+        }
+
         public static string CheckIfValidString(string question, string validResponse1, string validResponse2, string validResponse3)
         {
             string response = AskQuestionAndGetResponse(question);
