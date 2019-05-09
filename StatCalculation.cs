@@ -30,10 +30,12 @@ namespace ACMG_Generator
         private int luck = 4;
         private int specialisationNum;
         private string questionResponse;
-        int[] specialtyOneStat = new int[1] { 3 };
-        int[] specialtyTwoStat = new int[5] { 1, 6, 17, 19, 20 };
-        int[] specialtyThreeStat = new int[11] { 2, 4, 7, 8, 9, 10, 11, 12, 13, 14, 15 };
-        int[] specialtyFourStat = new int[2] { 5, 18 };
+        int[] specialisationStat;
+        string[] specialisationStatName;
+        int[] OneStatSpecialisation = new int[2] { 3, 16 };
+        int[] TwoStatSpecialisation = new int[5] { 1, 6, 17, 19, 20 };
+        int[] ThreeStatSpecialisation = new int[11] { 2, 4, 7, 8, 9, 10, 11, 12, 13, 14, 15 };
+        int[] FourStatSpecialisation = new int[2] { 5, 18 };
 
         public void CalculateBodyTypeStats(BodyType bodyType)
         {
@@ -126,7 +128,7 @@ namespace ACMG_Generator
 
         public void CalculateAbilityStats(int ability)
         {
-            if(ability == 1)
+            if (ability == 1)
             {
                 questionResponse = ResponseValidator.CheckIfValidString("Please enter desired ability stat bonus (STR/MAG)", "STR", "MAG");
 
@@ -148,7 +150,7 @@ namespace ACMG_Generator
 
         public void CalculateGeneralPerkStats(int diceRollNum)
         {
-            if(diceRollNum == 2 || diceRollNum == 3 || diceRollNum == 13 || diceRollNum == 19)
+            if (diceRollNum == 2 || diceRollNum == 3 || diceRollNum == 13 || diceRollNum == 19)
             {
                 luck = luck + 1;
             }
@@ -223,11 +225,11 @@ namespace ACMG_Generator
                     IncreaseOneStat(ref vitality, 1);
                 }
             }
-            else if(weapon == Weapon.Ranged)
+            else if (weapon == Weapon.Ranged)
             {
                 IncreaseOneStat(ref agility, 1);
             }
-            else if(weapon == Weapon.Mystic)
+            else if (weapon == Weapon.Mystic)
             {
                 IncreaseOneStat(ref magic, 1);
             }
@@ -239,42 +241,121 @@ namespace ACMG_Generator
 
         private void IncreaseSpecialisationStat(int specialisationNum)
         {
-            //num for 1stat - 3
+            //num for 1stat - 3,16
             //num for 2stats - 1,6,17,19,20
             //num for 3stats - 2,4,7-15
             //num for 4stats - 5,18
-            //have variable for 4 diff stats, which are assigned values in IncreaseXStat/s methods, so as to be able to use them here
-            //specialisation1 = specialisationDict.GetType
 
-            //for (int specCount = 0; specCount < 20; specCount++)
-            //{
-            //    if (specialisationNum == specialtyOneStat[specCount])
-            //    {
-            //        IncreaseOneStat(ref agility, 1);
-            //    }
-            //    else if (specialisationNum == specialtyTwoStat[specCount])
-            //    {
-            //        questionResponse = ResponseValidator.CheckIfValidString("Which of the two stats increased by your specialisation do you want to increase ({0}, {1})?", specialisationStat1, specialisationStat2);
+            for (int specCount = 0; specCount < specialisationNum; specCount++)
+            {
 
-            //        if (questionResponse == specialisationStat1)
-            //        {
-            //            specialisa
-            //        }
-            //        else
-            //        {
+                if (specCount < 2)
+                {
+                    if (specialisationNum == OneStatSpecialisation[specCount])
+                    {
+                        specialisationStat[0] = specialisationStat[0] + 1;
+                        break;
+                    }
 
-            //        }
+                    else if (specialisationNum == FourStatSpecialisation[specCount])
+                    {
+                        questionResponse = ResponseValidator.CheckIfValidString($"Which of the four stats increased by your specialisation do you want to increase ({specialisationStatName[0]}/{specialisationStatName[1]}/{specialisationStatName[2]}/{specialisationStatName[3]})?", specialisationStatName[0], specialisationStatName[1], specialisationStatName[2], specialisationStatName[3]);
 
-            //    }
-            //    else if (specialisationNum == specialtyThreeStat[specCount])
-            //    {
-            //        //code
-            //    }
-            //    else if (specialisationNum == specialtyFourStat[specCount])
-            //    {
-            //        //code
-            //    }
-            //}
+                        if (questionResponse == specialisationStatName[0].ToLower())
+                        {
+                            specialisationStat[0] = specialisationStat[0] + 1;
+                            break;
+                        }
+                        else if (questionResponse == specialisationStatName[1].ToLower())
+                        {
+                            specialisationStat[1] = specialisationStat[1] + 1;
+                            break;
+                        }
+                        else
+                        {
+                            specialisationStat[2] = specialisationStat[2] + 1;
+                            break;
+                        }
+                    }
+                }
+
+                if (specCount < 4)
+                {
+                    if (specialisationNum == TwoStatSpecialisation[specCount])
+                    {
+                        questionResponse = ResponseValidator.CheckIfValidString($"Which of the two stats increased by your specialisation do you want to increase ({specialisationStatName[0]}/{specialisationStatName[1]})?", specialisationStatName[0], specialisationStatName[1]);
+
+                        if (questionResponse == specialisationStatName[0].ToLower())
+                        {
+                            specialisationStat[0] = specialisationStat[0] + 1;
+                            break;
+                        }
+                        else if (questionResponse == specialisationStatName[1].ToLower())
+                        {
+                            specialisationStat[1] = specialisationStat[1] + 1;
+                            break;
+                        }
+                    }
+                }
+
+                if (specCount == 4)
+                {
+                    if (specialisationNum == TwoStatSpecialisation[specCount])
+                    {
+                        questionResponse = ResponseValidator.CheckIfValidString($"Which of the five stats you could have increased by your specialisation do you want to increase (({specialisationStatName[0]}/{specialisationStatName[1]}/{specialisationStatName[2]}/{specialisationStatName[3]}/{specialisationStatName[4]})?", specialisationStatName[0], specialisationStatName[1], specialisationStatName[2], specialisationStatName[3], specialisationStatName[4]);
+
+                        if (questionResponse == specialisationStatName[0].ToLower())
+                        {
+                            specialisationStat[0] = specialisationStat[0] + 1;
+                            break;
+                        }
+                        else if (questionResponse == specialisationStatName[1].ToLower())
+                        {
+                            specialisationStat[1] = specialisationStat[1] + 1;
+                            break;
+                        }
+                        else if (questionResponse == specialisationStatName[2].ToLower())
+                        {
+                            specialisationStat[2] = specialisationStat[2] + 1;
+                            break;
+                        }
+                        else if (questionResponse == specialisationStatName[3].ToLower())
+                        {
+                            specialisationStat[3] = specialisationStat[3] + 1;
+                            break;
+                        }
+                        else
+                        {
+                            specialisationStat[4] = specialisationStat[4] + 1;
+                            break;
+                        }
+                    }
+                }
+
+                if (specCount < 11)
+                {
+                    if (specialisationNum == ThreeStatSpecialisation[specCount])
+                    {
+                        questionResponse = ResponseValidator.CheckIfValidString($"Which of the three stats increased by your specialisation do you want to increase (({specialisationStatName[0]}/{specialisationStatName[1]}/{specialisationStatName[2]}/)?", specialisationStatName[0], specialisationStatName[1], specialisationStatName[2]);
+
+                        if (questionResponse == specialisationStatName[0].ToLower())
+                        {
+                            specialisationStat[0] = specialisationStat[0] + 1;
+                            break;
+                        }
+                        else if (questionResponse == specialisationStatName[1].ToLower())
+                        {
+                            specialisationStat[1] = specialisationStat[1] + 1;
+                            break;
+                        }
+                        else
+                        {
+                            specialisationStat[2] = specialisationStat[2] + 1;
+                            break;
+                        }
+                    }
+                }
+            }
         }
 
         private void IncreaseOutfitStat(Outfit outfit)
@@ -320,7 +401,7 @@ namespace ACMG_Generator
         {
             questionResponse = ResponseValidator.CheckIfValidString(question, validAnswer1, validAnswer2);
 
-            if(questionResponse == validAnswer1.ToLower())
+            if (questionResponse == validAnswer1.ToLower())
             {
                 IncreaseOneStat(ref statType1, amountIncreasedStat1);
             }
@@ -371,6 +452,7 @@ namespace ACMG_Generator
             if (questionResponse == validAnswer1.ToLower())
             {
                 IncreaseOneStat(ref statType1, amountIncreased);
+                IncreaseAnyOtherStat("Please enter the desired ability stat bonus (AGI/VIT/MAG/LCK)", "AGI", "VIT", "MAG", "LCK", ref statType2, ref statType3, ref statType4, ref statType5, 1);
             }
             else if (questionResponse == validAnswer2.ToLower())
             {
@@ -390,9 +472,14 @@ namespace ACMG_Generator
             }
         }
 
+        private void IncreaseAnyOtherStat(string question, string validAnswer1, string validAnswer2, string validAnswer3, string validAnswer4, ref int statType1, ref int statType2, ref int statType3, ref int statType4, int amountIncreased)
+        {
+
+        }
+
         private void CalculateSpecialisationAndCombatPerkStats(int diceRollNum, CharacterBuildCategory characterBuildCategory, Weapon weaponType, Outfit outfitType)
         {
-            if(characterBuildCategory == CharacterBuildCategory.Specialisation)
+            if (characterBuildCategory == CharacterBuildCategory.Specialisation)
             {
                 specialisationNum = diceRollNum;
             }
@@ -400,9 +487,11 @@ namespace ACMG_Generator
             switch (diceRollNum)
             {
                 case 1:
-                    if(characterBuildCategory == CharacterBuildCategory.Specialisation)
+                    if (characterBuildCategory == CharacterBuildCategory.Specialisation)
                     {
                         IncreaseOneStat("Please enter desired ability stat bonus (STR/MAG)", "STR", "MAG", ref strength, ref magic, 3);
+                        specialisationStat = new int[] { strength, magic };
+                        specialisationStatName = new string[] { "STR", "MAG" };
                         break;
                     }
                     else
@@ -415,7 +504,8 @@ namespace ACMG_Generator
                     if (characterBuildCategory == CharacterBuildCategory.Specialisation)
                     {
                         IncreaseTwoStats("Please enter desired ability stat bonus (STR/MAG)", "STR", "MAG", ref strength, ref magic, ref vitality, 3, 1);
-                        break;
+                        specialisationStat = new int[] { strength, magic, vitality };
+                        specialisationStatName = new string[] { "STR", "MAG", "VIT" }; break;
                     }
                     else
                     {
@@ -427,7 +517,8 @@ namespace ACMG_Generator
                     if (characterBuildCategory == CharacterBuildCategory.Specialisation)
                     {
                         IncreaseOneStat(ref agility, 4);
-                        break;
+                        specialisationStat = new int[] { agility };
+                        specialisationStatName = new string[] { "AGI" }; break;
                     }
                     else
                     {
@@ -439,6 +530,8 @@ namespace ACMG_Generator
                     if (characterBuildCategory == CharacterBuildCategory.Specialisation)
                     {
                         IncreaseTwoStats("Please enter desired ability stat bonus (MAG/LCK)", "MAG", "LCK", ref magic, ref luck, ref magic, 2, 1);
+                        specialisationStat = new int[] { magic, luck };
+                        specialisationStatName = new string[] { "MAG", "LUCK" };
                         break;
                     }
                     break;
@@ -447,11 +540,13 @@ namespace ACMG_Generator
                     if (characterBuildCategory == CharacterBuildCategory.Specialisation)
                     {
                         IncreaseFourStats(ref strength, ref agility, ref magic, ref luck, 1);
+                        specialisationStat = new int[] { strength, agility, magic, luck };
+                        specialisationStatName = new string[] { "STR", "AGI", "MAG", "LCK" };
                         break;
                     }
                     else
                     {
-                        IncreaseSpecialisationStat(specialisationNum); //still need to get this working!
+                        IncreaseSpecialisationStat(specialisationNum);
                         break;
                     }
 
@@ -459,6 +554,8 @@ namespace ACMG_Generator
                     if (characterBuildCategory == CharacterBuildCategory.Specialisation)
                     {
                         IncreaseOneStat("Please enter desired ability stat bonus (MAG/LCK)", "NAG", "LCK", ref magic, ref luck, 2);
+                        specialisationStat = new int[] { magic, luck };
+                        specialisationStatName = new string[] { "MAG", "LCK" };
                         break;
                     }
                     else
@@ -471,6 +568,8 @@ namespace ACMG_Generator
                     if (characterBuildCategory == CharacterBuildCategory.Specialisation)
                     {
                         IncreaseTwoStats("Please enter desired ability stat bonus (AGI/VIT)", "AGI", "VIT", ref agility, ref vitality, ref luck, 1, 2);
+                        specialisationStat = new int[] { agility, vitality, luck };
+                        specialisationStatName = new string[] { "AGI", "VIT", "LCK" };
                         break;
                     }
                     break;
@@ -479,6 +578,8 @@ namespace ACMG_Generator
                     if (characterBuildCategory == CharacterBuildCategory.Specialisation)
                     {
                         IncreaseTwoStats("Please enter desired ability stat bonus (STR/MAG)", "STR", "MAG", ref strength, ref magic, ref agility, 1, 2);
+                        specialisationStat = new int[] { strength, magic, agility };
+                        specialisationStatName = new string[] { "STR", "MAG", "AGI" };
                         break;
                     }
                     break;
@@ -487,6 +588,8 @@ namespace ACMG_Generator
                     if (characterBuildCategory == CharacterBuildCategory.Specialisation)
                     {
                         IncreaseThreeStats(ref agility, ref magic, ref luck, 1, 2, 1);
+                        specialisationStat = new int[] { agility, magic, luck };
+                        specialisationStatName = new string[] { "AGI", "MAG", "LCK" };
                         break;
                     }
                     else
@@ -499,6 +602,8 @@ namespace ACMG_Generator
                     if (characterBuildCategory == CharacterBuildCategory.Specialisation)
                     {
                         IncreaseTwoStats("Please enter desired ability stat bonus (STR/MAG)", "STR", "MAG", ref strength, ref magic, ref vitality, 2, 1);
+                        specialisationStat = new int[] { strength, magic, vitality };
+                        specialisationStatName = new string[] { "STR", "MAG", "VIT" };
                         break;
                     }
                     break;
@@ -507,6 +612,8 @@ namespace ACMG_Generator
                     if (characterBuildCategory == CharacterBuildCategory.Specialisation)
                     {
                         IncreaseThreeStats(ref strength, ref vitality, ref luck, 2, 1, 1);
+                        specialisationStat = new int[] { strength, vitality, luck };
+                        specialisationStatName = new string[] { "STR", "VIT", "LCK" };
                         break;
                     }
                     else
@@ -519,6 +626,8 @@ namespace ACMG_Generator
                     if (characterBuildCategory == CharacterBuildCategory.Specialisation)
                     {
                         IncreaseThreeStats(ref agility, ref vitality, ref magic, 1, 2, 1);
+                        specialisationStat = new int[] { agility, vitality, magic };
+                        specialisationStatName = new string[] { "AGI", "VIT", "MAG" };
                         break;
                     }
                     else
@@ -531,6 +640,8 @@ namespace ACMG_Generator
                     if (characterBuildCategory == CharacterBuildCategory.Specialisation)
                     {
                         IncreaseThreeStats(ref strength, ref vitality, ref magic, 1, 1, 2);
+                        specialisationStat = new int[] { strength, vitality, magic };
+                        specialisationStatName = new string[] { "STR", "VIT", "MAG" };
                         break;
                     }
                     break;
@@ -539,11 +650,13 @@ namespace ACMG_Generator
                     if (characterBuildCategory == CharacterBuildCategory.Specialisation)
                     {
                         IncreaseThreeStats(ref strength, ref magic, ref luck, 1, 1, 2);
+                        specialisationStat = new int[] { strength, magic };
+                        specialisationStatName = new string[] { "STR", "MAG" };
                         break;
                     }
                     else
                     {
-                        IncreaseAnyStat("Please enter desired ability stat bonus (STR/AGI/VIT/MAG/LCK)", "STR", "AGI", "VIT", "MAG", "LCK", ref strength, ref agility, ref vitality, ref magic, ref luck, 1);
+                        IncreaseAnyStat("Please enter desired perk-given stat bonus (STR/AGI/VIT/MAG/LCK)", "STR", "AGI", "VIT", "MAG", "LCK", ref strength, ref agility, ref vitality, ref magic, ref luck, 1);
                     }
                     break;
 
@@ -551,6 +664,8 @@ namespace ACMG_Generator
                     if (characterBuildCategory == CharacterBuildCategory.Specialisation)
                     {
                         IncreaseThreeStats(ref strength, ref agility, ref magic, 1, 2, 1);
+                        specialisationStat = new int[] { strength, agility, magic };
+                        specialisationStatName = new string[] { "STR", "AGI", "MAG" };
                         break;
                     }
                     break;
@@ -559,6 +674,8 @@ namespace ACMG_Generator
                     if (characterBuildCategory == CharacterBuildCategory.Specialisation)
                     {
                         IncreaseOneStat(ref magic, 4);
+                        specialisationStat = new int[] { magic };
+                        specialisationStatName = new string[] { "MAG" };
                         break;
                     }
                     else
@@ -571,6 +688,8 @@ namespace ACMG_Generator
                     if (characterBuildCategory == CharacterBuildCategory.Specialisation)
                     {
                         IncreaseOneStat("Please enter desired ability stat bonus (STR/MAG)", "STR", "MAG", ref strength, ref magic, 3);
+                        specialisationStat = new int[] { strength, magic };
+                        specialisationStatName = new string[] { "STR", "MAG" };
                     }
                     break;
 
@@ -578,20 +697,26 @@ namespace ACMG_Generator
                     if (characterBuildCategory == CharacterBuildCategory.Specialisation)
                     {
                         IncreaseThreeStats("Please enter desired ability stat bonus (VIT/LCK)", "VIT", "LCK", ref strength, ref agility, ref vitality, ref luck, 1, 1, 1);
+                        specialisationStat = new int[] { strength, agility, vitality, luck };
+                        specialisationStatName = new string[] { "STR", "AGI", "VIT", "LCK" };
                     }
                     break;
 
                 case 19:
                     if (characterBuildCategory == CharacterBuildCategory.Specialisation)
                     {
-
+                        IncreaseOneStat("Please enter the desired ability stat bonus (STR/LCK)", "STR", "LCK", ref strength, ref luck, 3);
+                        specialisationStat = new int[] { strength, luck };
+                        specialisationStatName = new string[] { "STR", "LCK" };
                     }
                     break;
 
                 case 20:
                     if (characterBuildCategory == CharacterBuildCategory.Specialisation)
                     {
-
+                        IncreaseAnyStat("Please enter the desired ability stat bonus (STR/AGI/VIT/MAG/LCK)", "STR", "AGI", "VIT", "MAG", "LCK", ref strength, ref agility, ref vitality, ref magic, ref luck, 2);
+                        specialisationStat = new int[] { strength, agility, vitality, magic, luck };
+                        specialisationStatName = new string[] { "STR", "AGI", "VIT", "MAG", "LCK" };
                     }
                     break;
 
@@ -600,7 +725,7 @@ namespace ACMG_Generator
             }
         }
 
-            public void Display()
+        public void Display()
         {
             Console.WriteLine();
             Console.WriteLine("STATS");
