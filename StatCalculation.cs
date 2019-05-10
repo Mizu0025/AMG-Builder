@@ -249,7 +249,7 @@ namespace ACMG_Generator
             for (int specCount = 0; specCount < specialisationNum; specCount++)
             {
 
-                if (specCount < 2)
+                if (specCount <= 1)
                 {
                     if (specialisationNum == OneStatSpecialisation[specCount])
                     {
@@ -279,7 +279,7 @@ namespace ACMG_Generator
                     }
                 }
 
-                if (specCount < 4)
+                if (specCount <= 3)
                 {
                     if (specialisationNum == TwoStatSpecialisation[specCount])
                     {
@@ -332,7 +332,7 @@ namespace ACMG_Generator
                     }
                 }
 
-                if (specCount < 11)
+                if (specCount <= 10)
                 {
                     if (specialisationNum == ThreeStatSpecialisation[specCount])
                     {

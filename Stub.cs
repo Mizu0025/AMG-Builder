@@ -10,12 +10,18 @@ namespace ACMG_Generator
             string characterName;
             string response;
             bool repeat = true;
+            const string responseYes = "y";
+            const string responseNo = "n";
 
-            while(repeat == true)
+            //Next task - make a second character sheet which the diceRoller is used to fill out
+            //make genericStatCalc class with stuff which isn't dependant on mahou char generation
+            //make mahouStatCalc which inherits from generic StatCalc
+
+            while (repeat == true)
             {
-                response = ResponseValidator.CheckIfValidString("Do you want to name your character (Y/N)?", "Y", "N");
+                response = ResponseValidator.CheckIfValidString("Do you want to name your character (Y/N)?", responseYes, responseNo);
 
-                if (response == "Y")
+                if (response == responseYes)
                 {
                     Console.WriteLine("What is the name of your character?");
                     characterName = Console.ReadLine();
@@ -28,9 +34,9 @@ namespace ACMG_Generator
                 diceRoll.Display();
                 Console.WriteLine();
 
-                response = ResponseValidator.CheckIfValidString("Do you want to make another character (Y/N)?", "Y", "N");
+                response = ResponseValidator.CheckIfValidString("Do you want to make another character (Y/N)?", responseYes, responseNo);
 
-                if (response.ToUpper() == "N")
+                if (response == responseNo)
                 {
                     repeat = false;
                 }

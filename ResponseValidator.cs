@@ -4,8 +4,10 @@ using System.Text;
 
 namespace ACMG_Generator
 {
-    static class ResponseValidator
+    class ResponseValidator
     {
+        private static List<string> validResponses;
+
         public static string CheckIfAnswerEntered(string question)
         {
             string response = AskQuestionAndGetResponse(question);
@@ -17,10 +19,9 @@ namespace ACMG_Generator
             return response;
         }
 
-        private static string CheckIfValidString(string question, List<string> validStringValues)
+        private static string CheckIfValidString(string question, List<string> validValues)
         {
             string response = AskQuestionAndGetResponse(question);
-            List<string> validValues = validStringValues;
 
             while (validValues.IndexOf(response.ToLower()) == -1)
             {
@@ -31,22 +32,22 @@ namespace ACMG_Generator
 
         public static string CheckIfValidString(string question, string validResponse1, string validResponse2)
         {
-            return CheckIfValidString(question, new List<string> { validResponse1.ToLower(), validResponse2.ToLower() });
+            return CheckIfValidString(question, validResponses = new List<string> { validResponse1.ToLower(), validResponse2.ToLower() });
         }
 
         public static string CheckIfValidString(string question, string validResponse1, string validResponse2, string validResponse3)
         {
-            return CheckIfValidString(question, new List<string> { validResponse1.ToLower(), validResponse2.ToLower(), validResponse3.ToLower() });
+            return CheckIfValidString(question, validResponses = new List<string> { validResponse1.ToLower(), validResponse2.ToLower(), validResponse3.ToLower() });
         }
 
         public static string CheckIfValidString(string question, string validResponse1, string validResponse2, string validResponse3, string validResponse4)
         {
-            return CheckIfValidString(question, new List<string> { validResponse1.ToLower(), validResponse2.ToLower(), validResponse3.ToLower(), validResponse4.ToLower() });
+            return CheckIfValidString(question, validResponses = new List<string> { validResponse1.ToLower(), validResponse2.ToLower(), validResponse3.ToLower(), validResponse4.ToLower() });
         }
 
         public static string CheckIfValidString(string question, string validResponse1, string validResponse2, string validResponse3, string validResponse4, string validResponse5)
         {
-            return CheckIfValidString(question, new List<string> { validResponse1.ToLower(), validResponse2.ToLower(), validResponse3.ToLower(), validResponse4.ToLower(), validResponse5.ToLower() });
+            return CheckIfValidString(question, validResponses = new List<string> { validResponse1.ToLower(), validResponse2.ToLower(), validResponse3.ToLower(), validResponse4.ToLower(), validResponse5.ToLower() });
         }
 
         public static int CheckIfValidInt(string question)
