@@ -142,12 +142,6 @@ namespace ACMG_Generator
         public Ability ability;
         public List<Enum> perks = new List<Enum>();
         private string questionResponse;
-        private List<Enum> defaultPerks = new List<Enum> { CombatPerks.Ally, CombatPerks.Awareness, GeneralPerks.AbsoluteDirection, GeneralPerks.BigBackpack, GeneralPerks.EternalStyle };
-
-        public AccidentalMagicalGirlDataStore()
-        {
-            //code
-        }
 
         public AccidentalMagicalGirlDataStore(string characterName)
         {
@@ -334,11 +328,6 @@ namespace ACMG_Generator
         {
             perks.Add(characterGeneralPerk);
             stats.CalculateGeneralPerkStats((int)characterGeneralPerk);
-        }
-
-        public void SetDefaultPerks()
-        {
-            perks = defaultPerks;
         }
 
         public void SetDefaultStats()
