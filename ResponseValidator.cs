@@ -74,11 +74,14 @@ namespace ACMG_Generator
             return doubleResponse;
         }
 
-        public static int CheckIfIntValueBetween(string question, int lowEndValue, int highEndValue)
+        public static int CheckIfIntValueBetween(string question, int lowestValue, int highestValue)
         {
+            lowestValue -= 1;
+            highestValue += 1;
+
             int intResponse = CheckIfValidInt(question);
 
-            while (intResponse <= lowEndValue || intResponse >= highEndValue)
+            while (intResponse <= lowestValue || intResponse >= highestValue)
             {
                 intResponse = CheckIfValidInt(question);
             }

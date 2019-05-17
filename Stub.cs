@@ -6,7 +6,7 @@ namespace ACMG_Generator
     {
         static void Main(string[] args)
         {
-            DiceRoller diceRoll;
+            AccidentalMagicalGirlDataStore accidentalMagicalGirlDataStore;
             string characterName;
             string response;
             bool repeat = true;
@@ -25,13 +25,13 @@ namespace ACMG_Generator
                 {
                     Console.WriteLine("What is the name of your character?");
                     characterName = Console.ReadLine();
-                    diceRoll = new DiceRoller(characterName);
+                    accidentalMagicalGirlDataStore = new AccidentalMagicalGirlDataStore(characterName);
                 }
                 else
                 {
-                    diceRoll = new DiceRoller();
+                    accidentalMagicalGirlDataStore = new AccidentalMagicalGirlDataStore("");
                 }
-                diceRoll.Display();
+                accidentalMagicalGirlDataStore.Display();
                 Console.WriteLine();
 
                 response = ResponseValidator.CheckIfValidString("Do you want to make another character (Y/N)?", responseYes, responseNo);

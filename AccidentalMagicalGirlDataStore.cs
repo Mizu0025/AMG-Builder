@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Text;
 
 namespace ACMG_Generator
 {
-    enum BodyType
+    public enum BodyType
     {
         Unknown,
         Underdeveloped,
@@ -12,14 +13,14 @@ namespace ACMG_Generator
         Overdeveloped
     }
 
-    enum Gender
+    public enum Gender
     {
         Unknown,
         Male,
         Female
     }
 
-    enum Specialisation
+    public enum Specialisation
     {
         Unknown,
         Fire,
@@ -44,7 +45,7 @@ namespace ACMG_Generator
         Oddball
     }
 
-    enum Weapon
+    public enum Weapon
     {
         Unknown,
         Melee,
@@ -53,7 +54,7 @@ namespace ACMG_Generator
         Fist
     }
 
-    enum Outfit
+    public enum Outfit
     {
         Unknown,
         Skimpy,
@@ -62,89 +63,96 @@ namespace ACMG_Generator
         Uniform
     }
 
-    enum Ability
+    public enum Ability
     {
         Unknown,
-        Killing_Blow,
+        KillingBlow,
         Hammerspace,
-        Twinned_Soul,
-        Focused_Assault,
+        TwinnedSoul,
+        FocusedAssault,
         Barrage,
-        Power_of_Friendship,
+        PowerofFriendship,
         Duplication,
-        Third_Eye,
+        ThirdEye,
         Regeneration,
         Tentacles
     }
 
-    enum CombatPerks
+    public enum CombatPerks
     {
         Unknown,
-        Dual_Weapon,
-        Martial_Training,
-        Enhanced_Weapon,
-        Mystic_Artifact,
+        DualWeapon,
+        MartialTraining,
+        EnhancedWeapon,
+        MysticArtifact,
         Gifted,
         Flexibility,
-        Enhanced_Transformation,
-        Disguise_Artifact,
-        Blood_Magic,
-        Hammerspace_Handbag,
-        Enhanced_Sustenance,
-        Enhanced_Outfit,
-        Healing_Artifact,
+        EnhancedTransformation,
+        DisguiseArtifact,
+        BloodMagic,
+        HammerspaceHandbag,
+        EnhancedSustenance,
+        EnhancedOutfit,
+        HealingArtifact,
         Ally,
-        Monstrous_Metamorphosis,
+        MonstrousMetamorphosis,
         Sorcery,
         Wings,
-        Purification_Artifact,
+        PurificationArtifact,
         Awareness,
-        Power_Artifact
+        PowerArtifact
     }
 
-    enum GeneralPerks
+    public enum GeneralPerks
     {
         Unknown,
-        Interdimensional_Tourist,
+        InterdimensionalTourist,
         Closure,
         Fated,
         Training,
-        Interdimensional_Home,
+        InterdimensionalHome,
         Incognito,
-        Environmental_Sealing,
-        Get_Out_Of_Jail,
-        Big_Damn_Hero,
-        Absolute_Direction,
-        Big_Backpack,
-        Natural_Aging,
+        EnvironmentalSealing,
+        GetOutOfJail,
+        BigDamnHero,
+        AbsoluteDirection,
+        BigBackpack,
+        NaturalAging,
         Masculinity,
-        Overcity_Shift,
+        OvercityShift,
         Money,
         Familiar,
-        Soul_Jar,
-        Eternal_Style,
-        A_Way_Out,
-        Fake_Parents
+        SoulJar,
+        EternalStyle,
+        AWayOut,
+        FakeParents
     }
 
-    class MahouDataStore
+    public class AccidentalMagicalGirlDataStore
     {
-        private string name;
-        private int age;
-        private BodyType bodyType;
-        private Gender gender;
-        private Specialisation specialisation;
-        private Weapon weapon;
-        private Outfit outfit;
-        private Ability ability;
-        private List<Enum> perks = new List<Enum>();
-        private StatCalculation stats = new StatCalculation();
+        private AccidentalMagicalGirlStatCalc stats = new AccidentalMagicalGirlStatCalc();
+        private DiceRoller diceResults = new DiceRoller(11, 20);
+        public string name;
+        public int age;
+        public BodyType bodyType;
+        public Gender gender;
+        public Specialisation specialisation;
+        public Weapon weapon;
+        public Outfit outfit;
+        public Ability ability;
+        public List<Enum> perks = new List<Enum>();
         private string questionResponse;
+        private List<Enum> defaultPerks = new List<Enum> { CombatPerks.Ally, CombatPerks.Awareness, GeneralPerks.AbsoluteDirection, GeneralPerks.BigBackpack, GeneralPerks.EternalStyle };
 
-        public MahouDataStore(string characterName, List<int> diceResults)
+        public AccidentalMagicalGirlDataStore()
+        {
+            //code
+        }
+
+        public AccidentalMagicalGirlDataStore(string characterName)
         {
             SetName(characterName);
-            SetBuild(diceResults);
+            SetBuild(diceResults.GetDiceResults());
             SetGender(perks);
         }
 
@@ -155,7 +163,7 @@ namespace ACMG_Generator
 
         public void SetAge(int diceNum)
         {
-            if(diceNum > 10)
+            if (diceNum > 10)
             {
                 age = diceNum - 10 + 6;
             }
@@ -167,7 +175,7 @@ namespace ACMG_Generator
 
         public void SetGender(List<Enum> perks)
         {
-            if(perks.Contains(GeneralPerks.Masculinity))
+            if (perks.Contains(GeneralPerks.Masculinity))
             {
                 gender = Gender.Male;
             }
@@ -219,15 +227,15 @@ namespace ACMG_Generator
 
         public void SetWeapon(int diceNum)
         {
-            if(diceNum < 6)
+            if (diceNum < 6)
             {
                 weapon = Weapon.Melee;
             }
-            else if(diceNum < 11)
+            else if (diceNum < 11)
             {
                 weapon = Weapon.Ranged;
             }
-            else if(diceNum < 16)
+            else if (diceNum < 16)
             {
                 weapon = Weapon.Mystic;
             }
@@ -273,7 +281,7 @@ namespace ACMG_Generator
 
         public void SetAbility(int diceNum)
         {
-            if(diceNum > 10)
+            if (diceNum > 10)
             {
                 ability = (Ability)diceNum - 10;
             }
@@ -311,7 +319,7 @@ namespace ACMG_Generator
 
         public void SetGeneralPerk(int diceNum)
         {
-            if(perks.Contains((GeneralPerks)diceNum))
+            if (perks.Contains((GeneralPerks)diceNum))
             {
                 SetCombatPerk(diceNum);
             }
@@ -328,9 +336,24 @@ namespace ACMG_Generator
             stats.CalculateGeneralPerkStats((int)characterGeneralPerk);
         }
 
+        public void SetDefaultPerks()
+        {
+            perks = defaultPerks;
+        }
+
+        public void SetDefaultStats()
+        {
+            stats.CalculateDefaultStats();
+        }
+
+        public List<int> GetDiceResults()
+        {
+            return diceResults.GetDiceResults();
+        }
+
         public void SetBuild(List<int> diceResults)
         {
-            for(int diceNum = 0; diceNum < diceResults.Count; diceNum++)
+            for (int diceNum = 0; diceNum < diceResults.Count; diceNum++)
             {
                 switch (diceNum)
                 {
@@ -396,7 +419,8 @@ namespace ACMG_Generator
 
         public void Display()
         {
-            //shift specialisation, ability and perk assignment to their own classes
+            diceResults.Display();
+
             Console.WriteLine("BUILD DETAILS");
             Console.WriteLine("Character Name: {0}", name);
             Console.WriteLine("Age: {0}", age);
@@ -407,9 +431,9 @@ namespace ACMG_Generator
             Console.WriteLine("Outfit: {0}", outfit.ToString());
             Console.WriteLine("Ability: {0}", ability.ToString());
 
-            for(int perkCount = 0; perkCount < perks.Count; perkCount++)
+            for (int perkCount = 0; perkCount < perks.Count; perkCount++)
             {
-                Console.WriteLine("Perk {0}: {1}", perkCount+1, perks[perkCount]);
+                Console.WriteLine("Perk {0}: {1}", perkCount + 1, perks[perkCount]);
             }
 
             stats.Display();
