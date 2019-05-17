@@ -13,10 +13,6 @@ namespace ACMG_Generator
             const string responseYes = "y";
             const string responseNo = "n";
 
-            //Next task - make a second character sheet which the diceRoller is used to fill out
-            //make genericStatCalc class with stuff which isn't dependant on mahou char generation
-            //make mahouStatCalc which inherits from generic StatCalc
-
             while (repeat == true)
             {
                 response = ResponseValidator.CheckIfValidString("Do you want to name your character (Y/N)?", responseYes, responseNo);

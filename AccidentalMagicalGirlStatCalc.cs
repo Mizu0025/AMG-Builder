@@ -71,12 +71,6 @@ namespace ACMG_Generator
             }
         }
 
-        public void CalculateDefaultStats()
-        {
-            IncreaseOneStat(ref vitality, 2);//bodyType & weapon
-            IncreaseOneStat(ref strength, 6);//specialisation, weapon, outfit, ally
-        }
-
         public void CalculateWeaponStats(Weapon weapon)
         {
             if (weapon == Weapon.Melee)
